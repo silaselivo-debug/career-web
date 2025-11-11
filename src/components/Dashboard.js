@@ -3,13 +3,14 @@ import React from 'react';
 const Dashboard = ({ userRole, onNavigate, onLogout }) => {
   const dashboardStyle = {
     minHeight: '100vh',
-    background: 'blue',
-    padding: '20px'
+    background: '#f3f4f6',
+    padding: '20px',
+    fontFamily: "'Inter', 'Segoe UI', sans-serif"
   };
 
   const headerStyle = {
     textAlign: 'center',
-    color: 'white',
+    color: '#374151',
     marginBottom: '40px'
   };
 
@@ -23,17 +24,18 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
 
   const cardStyle = {
     background: 'white',
-    borderRadius: '10px',
+    borderRadius: '8px',
     padding: '30px',
     textAlign: 'center',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    border: '1px solid #e5e7eb',
     cursor: 'pointer',
-    transition: 'transform 0.3s, box-shadow 0.3s'
+    transition: 'all 0.2s ease'
   };
 
   const cardHoverStyle = {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 15px 40px rgba(0,0,0,0.3)'
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
   };
 
   const [hoveredCard, setHoveredCard] = React.useState(null);
@@ -46,7 +48,7 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
         title: 'Student Portal',
         description: 'Apply for courses, view admissions, upload documents, and apply for jobs',
         role: 'student',
-        color: '#4CAF50'
+        color: '#2563eb'
       });
     }
 
@@ -55,7 +57,7 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
         title: 'Institute Portal',
         description: 'Manage faculties, courses, view applications, and publish admissions',
         role: 'institute',
-        color: '#2196F3'
+        color: '#2563eb'
       });
     }
 
@@ -64,7 +66,7 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
         title: 'Admin Portal',
         description: 'Manage institutions, companies, and view system reports',
         role: 'admin',
-        color: '#FF9800'
+        color: '#2563eb'
       });
     }
 
@@ -73,7 +75,7 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
         title: 'Company Portal',
         description: 'Post job opportunities and view qualified applicants',
         role: 'company',
-        color: '#9C27B0'
+        color: '#2563eb'
       });
     }
 
@@ -82,25 +84,29 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
         key={index}
         style={{
           ...cardStyle,
-          borderTop: `5px solid ${card.color}`,
+          borderTop: `4px solid ${card.color}`,
           ...(hoveredCard === index && cardHoverStyle)
         }}
         onMouseEnter={() => setHoveredCard(index)}
         onMouseLeave={() => setHoveredCard(null)}
         onClick={() => onNavigate(card.role)}
       >
-        <h3 style={{ color: card.color, marginBottom: '15px' }}>{card.title}</h3>
-        <p style={{ color: '#666', lineHeight: '1.5' }}>{card.description}</p>
+        <h3 style={{ color: '#374151', marginBottom: '15px', fontSize: '1.25rem', fontWeight: '600' }}>{card.title}</h3>
+        <p style={{ color: '#6b7280', lineHeight: '1.5', marginBottom: '20px' }}>{card.description}</p>
         <button
           style={{
-            marginTop: '20px',
             padding: '10px 20px',
-            backgroundColor: card.color,
+            backgroundColor: '#2563eb',
             color: 'white',
             border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '600',
+            fontSize: '14px',
+            transition: 'background-color 0.2s ease'
           }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#1d4ed8'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = '#2563eb'}
         >
           Enter Portal
         </button>
@@ -111,18 +117,28 @@ const Dashboard = ({ userRole, onNavigate, onLogout }) => {
   return (
     <div style={dashboardStyle}>
       <header style={headerStyle}>
-        <h1>Career Guidance & Employment Integration Platform</h1>
-        <p>Welcome to your dashboard</p>
+        <h1 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '10px' }}>Career Guidance Platform</h1>
+        <p style={{ fontSize: '1.1rem', color: '#6b7280', marginBottom: '20px' }}>Welcome to your dashboard</p>
         <button
           onClick={onLogout}
           style={{
-            marginTop: '20px',
             padding: '10px 20px',
             backgroundColor: 'transparent',
-            color: 'white',
-            border: '2px solid white',
-            borderRadius: '5px',
-            cursor: 'pointer'
+            color: '#374151',
+            border: '1px solid #d1d5db',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '600',
+            fontSize: '14px',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#f3f4f6';
+            e.target.style.borderColor = '#9ca3af';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = 'transparent';
+            e.target.style.borderColor = '#d1d5db';
           }}
         >
           Logout
