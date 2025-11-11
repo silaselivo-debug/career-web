@@ -273,7 +273,7 @@ function App() {
           fontWeight: 'bold',
           textAlign: 'center'
         }}>
-          🎓 EduConnect Lesotho
+           EduConnect Lesotho
         </div>
         <div style={{ 
           fontSize: '18px',
