@@ -118,7 +118,7 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
   const styles = {
     portal: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: '#f3f4f6',
       fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
       display: 'flex',
       alignItems: 'center',
@@ -126,213 +126,183 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
       padding: '20px'
     },
     container: {
-      maxWidth: '440px',
+      maxWidth: '400px',
       width: '100%',
       margin: '0 auto'
     },
     card: {
-      background: 'rgba(255, 255, 255, 0.95)',
-      backdropFilter: 'blur(20px)',
-      padding: '40px',
-      borderRadius: '24px',
-      boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-    },
-    cardHover: {
-      transform: 'translateY(-5px)',
-      boxShadow: '0 30px 80px rgba(0,0,0,0.2)'
+      background: '#ffffff',
+      padding: '32px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      border: '1px solid #e5e7eb'
     },
     header: {
       textAlign: 'center',
-      marginBottom: '35px'
+      marginBottom: '32px'
     },
     title: {
-      fontSize: '2.2rem',
-      fontWeight: 800,
-      margin: '0 0 12px 0',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      fontSize: '1.875rem',
+      fontWeight: 700,
+      margin: '0 0 8px 0',
+      color: '#2563eb'
     },
     subtitle: {
-      fontSize: '1.1rem',
-      color: '#718096',
+      fontSize: '1rem',
+      color: '#6b7280',
       margin: 0,
       fontWeight: 400,
       lineHeight: 1.5
     },
     errorCard: {
-      background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
-      color: 'white',
-      padding: '16px 20px',
-      borderRadius: '12px',
-      marginBottom: '28px',
+      background: '#fee2e2',
+      color: '#991b1b',
+      padding: '12px 16px',
+      borderRadius: '6px',
+      marginBottom: '24px',
       textAlign: 'center',
       fontSize: '14px',
-      fontWeight: 600,
-      boxShadow: '0 8px 25px rgba(255, 107, 107, 0.3)',
-      border: '1px solid rgba(255, 255, 255, 0.2)'
+      fontWeight: 500,
+      border: '1px solid #fecaca'
     },
     formGroup: {
-      marginBottom: '24px'
+      marginBottom: '20px'
     },
     label: {
       display: 'block',
-      marginBottom: '10px',
+      marginBottom: '8px',
       fontWeight: 600,
-      color: '#2d3748',
-      fontSize: '14px',
-      textTransform: 'uppercase',
-      letterSpacing: '0.5px'
+      color: '#374151',
+      fontSize: '14px'
     },
     input: {
       width: '100%',
-      padding: '16px 20px',
-      border: '2px solid #e2e8f0',
-      borderRadius: '12px',
-      fontSize: '16px',
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      padding: '12px 16px',
+      border: '1px solid #d1d5db',
+      borderRadius: '6px',
+      fontSize: '14px',
+      transition: 'all 0.2s ease',
       background: 'white',
       boxSizing: 'border-box',
       outline: 'none'
     },
     inputFocus: {
-      borderColor: '#667eea',
-      boxShadow: '0 0 0 4px rgba(102, 126, 234, 0.15)',
-      transform: 'scale(1.02)'
+      borderColor: '#2563eb',
+      boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
     },
     select: {
       width: '100%',
-      padding: '16px 20px',
-      border: '2px solid #e2e8f0',
-      borderRadius: '12px',
-      fontSize: '16px',
+      padding: '12px 16px',
+      border: '1px solid #d1d5db',
+      borderRadius: '6px',
+      fontSize: '14px',
       background: 'white',
       cursor: 'pointer',
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: 'all 0.2s ease',
       boxSizing: 'border-box',
       outline: 'none'
     },
     helperText: {
       display: 'block',
-      marginTop: '8px',
-      color: '#a0aec0',
+      marginTop: '6px',
+      color: '#9ca3af',
       fontSize: '12px',
-      fontWeight: 500
+      fontWeight: 400
     },
     primaryButton: {
       width: '100%',
-      padding: '18px',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '14px',
+      background: '#2563eb',
       color: 'white',
       border: 'none',
-      borderRadius: '12px',
-      fontSize: '16px',
-      fontWeight: 700,
+      borderRadius: '6px',
+      fontSize: '14px',
+      fontWeight: 600,
       cursor: 'pointer',
-      marginBottom: '24px',
-      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-      boxShadow: '0 8px 25px rgba(102, 126, 234, 0.4)',
+      marginBottom: '20px',
+      transition: 'all 0.2s ease',
       position: 'relative',
       overflow: 'hidden'
     },
     primaryButtonHover: {
-      transform: 'translateY(-3px) scale(1.02)',
-      boxShadow: '0 15px 40px rgba(102, 126, 234, 0.5)'
+      background: '#1d4ed8'
     },
     primaryButtonDisabled: {
-      background: '#cbd5e0',
-      cursor: 'not-allowed',
-      transform: 'none',
-      boxShadow: 'none'
+      background: '#9ca3af',
+      cursor: 'not-allowed'
     },
     secondaryButton: {
       width: '100%',
-      padding: '16px',
+      padding: '12px',
       background: 'transparent',
-      border: '2px solid #667eea',
-      color: '#667eea',
-      borderRadius: '12px',
-      fontSize: '15px',
-      fontWeight: 700,
+      border: '1px solid #2563eb',
+      color: '#2563eb',
+      borderRadius: '6px',
+      fontSize: '14px',
+      fontWeight: 600,
       cursor: 'pointer',
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: 'all 0.2s ease',
       marginBottom: '8px'
     },
     secondaryButtonHover: {
-      background: '#667eea',
-      color: 'white',
-      transform: 'translateY(-2px)',
-      boxShadow: '0 8px 25px rgba(102, 126, 234, 0.3)'
+      background: '#2563eb',
+      color: 'white'
     },
     divider: {
       textAlign: 'center',
-      padding: '25px 0',
-      borderTop: '1px solid #e2e8f0',
-      marginTop: '25px'
+      padding: '20px 0',
+      borderTop: '1px solid #e5e7eb',
+      marginTop: '20px'
     },
     dividerText: {
-      color: '#718096',
-      margin: '0 0 20px 0',
-      fontSize: '15px',
-      fontWeight: 500
+      color: '#6b7280',
+      margin: '0 0 16px 0',
+      fontSize: '14px',
+      fontWeight: 400
     },
     infoCard: {
-      background: 'linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)',
-      padding: '20px',
-      borderRadius: '12px',
-      border: '1px solid #e2e8f0',
-      marginTop: '25px'
+      background: '#f9fafb',
+      padding: '16px',
+      borderRadius: '6px',
+      border: '1px solid #e5e7eb',
+      marginTop: '20px'
     },
     infoTitle: {
-      margin: '0 0 10px 0',
-      fontSize: '13px',
-      fontWeight: 700,
-      color: '#4a5568',
-      textAlign: 'center',
-      textTransform: 'uppercase',
-      letterSpacing: '0.5px'
+      margin: '0 0 8px 0',
+      fontSize: '12px',
+      fontWeight: 600,
+      color: '#4b5563',
+      textAlign: 'center'
     },
     infoText: {
       margin: 0,
       fontSize: '12px',
-      color: '#718096',
+      color: '#6b7280',
       textAlign: 'center',
-      lineHeight: 1.5,
-      fontWeight: 500
+      lineHeight: 1.4
     },
     loadingSpinner: {
       display: 'inline-block',
-      width: '20px',
-      height: '20px',
-      border: '3px solid rgba(255,255,255,0.3)',
+      width: '16px',
+      height: '16px',
+      border: '2px solid rgba(255,255,255,0.3)',
       borderRadius: '50%',
       borderTopColor: 'white',
       animation: 'spin 1s ease-in-out infinite',
-      marginRight: '10px'
+      marginRight: '8px'
     }
   };
 
-  const [cardHover, setCardHover] = useState(false);
   const [buttonHover, setButtonHover] = useState(false);
 
   return (
     <div style={styles.portal}>
       <div style={styles.container}>
-        <div 
-          style={{
-            ...styles.card,
-            ...(cardHover && styles.cardHover)
-          }}
-          onMouseEnter={() => setCardHover(true)}
-          onMouseLeave={() => setCardHover(false)}
-        >
+        <div style={styles.card}>
           <div style={styles.header}>
             <h1 style={styles.title}>Welcome Back</h1>
             <p style={styles.subtitle}>
-              Sign in to access your personalized education portal
+              Sign in to access your account
             </p>
           </div>
           
@@ -351,7 +321,7 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                placeholder="Enter your registered email"
+                placeholder="Enter your email"
                 style={{
                   ...styles.input,
                   ...(focusedField === 'email' && styles.inputFocus)
@@ -369,7 +339,7 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                placeholder="Enter your secure password"
+                placeholder="Enter your password"
                 style={{
                   ...styles.input,
                   ...(focusedField === 'password' && styles.inputFocus)
@@ -416,43 +386,38 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
               {loading ? (
                 <span>
                   <span style={styles.loadingSpinner}></span>
-                  Authenticating Access...
+                  Signing in...
                 </span>
               ) : (
-                'Access Your Portal'
+                'Sign In'
               )}
             </button>
           </form>
 
           <div style={styles.divider}>
             <p style={styles.dividerText}>
-              New to the platform?
+              Don't have an account?
             </p>
             <button
               onClick={handleSwitchToRegister}
               style={styles.secondaryButton}
               onMouseEnter={(e) => {
-                e.target.style.background = '#667eea';
+                e.target.style.background = '#2563eb';
                 e.target.style.color = 'white';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.3)';
               }}
               onMouseLeave={(e) => {
                 e.target.style.background = 'transparent';
-                e.target.style.color = '#667eea';
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = 'none';
+                e.target.style.color = '#2563eb';
               }}
             >
-              Create New Account
+              Create Account
             </button>
           </div>
 
           <div style={styles.infoCard}>
-            <p style={styles.infoTitle}>Platform Access</p>
+            <p style={styles.infoTitle}>Need Help?</p>
             <p style={styles.infoText}>
-              Ensure you select the correct account type that matches your registration. 
-              Each account type provides access to specialized features and tools.
+              Select the account type that matches your registration to access the correct features.
             </p>
           </div>
         </div>
@@ -462,15 +427,6 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
         {`
           @keyframes spin {
             to { transform: rotate(360deg); }
-          }
-          
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          
-          .login-container {
-            animation: fadeIn 0.8s ease-out;
           }
         `}
       </style>
