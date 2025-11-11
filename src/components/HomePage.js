@@ -66,7 +66,7 @@ const HomePage = ({ onNavigate }) => {
     logo: {
       fontSize: '1.8rem',
       fontWeight: 700,
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: 'black',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text'
@@ -213,7 +213,7 @@ const HomePage = ({ onNavigate }) => {
       fontSize: '3rem',
       fontWeight: 800,
       marginBottom: '0.5rem',
-      background: 'linear-gradient(135deg, #fff 0%, #e3f2fd 100%)',
+      background: 'black',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text'
@@ -329,7 +329,7 @@ const HomePage = ({ onNavigate }) => {
           <button
             style={{
               ...styles.navButton,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'black',
               color: 'white'
             }}
             onClick={() => onNavigate('register')}
