@@ -235,16 +235,108 @@ const StudentPortal = ({ user, onLogout }) => {
     }
   ];
 
+  // Footer Component (Integrated from HomePage)
+  const Footer = () => {
+    const [hoveredFooterLink, setHoveredFooterLink] = React.useState(null);
+
+    const footerLinks = {
+      'Students': ['Browse Courses', 'Career Support', 'Job Portal', 'Resources'],
+      'Institutes': ['Dashboard', 'Analytics', 'Partnerships', 'Settings'],
+      'Companies': ['Talent Search', 'Post Jobs', 'Campus Connect', 'Analytics'],
+      'Support': ['Help Center', 'Contact', 'Documentation', 'Status']
+    };
+
+    const footerStyles = {
+      footer: {
+        background: '#2c3e50',
+        color: 'white',
+        padding: '4rem 2rem 2rem',
+        marginTop: 'auto'
+      },
+      footerContent: {
+        maxWidth: '1200px',
+        margin: '0 auto',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '3rem',
+        marginBottom: '3rem'
+      },
+      footerColumn: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+      },
+      footerTitle: {
+        fontSize: '1.2rem',
+        fontWeight: 700,
+        marginBottom: '1rem',
+        color: '#ecf0f1'
+      },
+      footerLink: {
+        color: '#bdc3c7',
+        textDecoration: 'none',
+        transition: 'all 0.3s ease',
+        padding: '0.3rem 0',
+        cursor: 'pointer'
+      },
+      footerLinkHover: {
+        color: 'white',
+        transform: 'translateX(5px)'
+      },
+      footerBottom: {
+        maxWidth: '1200px',
+        margin: '0 auto',
+        paddingTop: '2rem',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        textAlign: 'center',
+        color: '#95a5a6'
+      }
+    };
+
+    return (
+      <footer style={footerStyles.footer}>
+        <div style={footerStyles.footerContent}>
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category} style={footerStyles.footerColumn}>
+              <h4 style={footerStyles.footerTitle}>{category}</h4>
+              {links.map((link, index) => (
+                <a
+                  key={index}
+                  href="#"
+                  style={{
+                    ...footerStyles.footerLink,
+                    ...(hoveredFooterLink === `${category}-${index}` && footerStyles.footerLinkHover)
+                  }}
+                  onMouseEnter={() => setHoveredFooterLink(`${category}-${index}`)}
+                  onMouseLeave={() => setHoveredFooterLink(null)}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div style={footerStyles.footerBottom}>
+          <p>&copy; 2024 LearnBridge. Empowering education through technology and innovation.</p>
+        </div>
+      </footer>
+    );
+  };
+
   const styles = {
     portal: {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"
+      fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
+      display: 'flex',
+      flexDirection: 'column'
     },
     container: {
       maxWidth: '1200px',
       margin: '0 auto',
-      padding: '20px'
+      padding: '20px',
+      flex: '1'
     },
     header: {
       background: 'rgba(255, 255, 255, 0.95)',
@@ -1379,6 +1471,9 @@ const StudentPortal = ({ user, onLogout }) => {
         {activeTab === 'jobs' && renderJobPortal()}
         {activeTab === 'profile' && renderProfile()}
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
