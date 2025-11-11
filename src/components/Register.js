@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const Register = ({ onSwitchToLogin, onLogin }) => {
   // List of major institutions in Lesotho
@@ -38,7 +38,49 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [success, setSuccess] = useState('');
+
+  // Add the missing storeUserData function
+  const storeUserData = (userId, userData) => {
+    // Store user role in localStorage
+    localStorage.setItem(`userRole_${userId}`, userData.role);
+    
+    // For institutions, store additional info
+    if (userData.role === 'institute') {
+      localStorage.setItem(`instituteData_${userId}`, JSON.stringify({
+        name: userData.institutionName,
+        email: userData.email,
+        id: userId
+      }));
+    }
+    
+    // For students, store student data
+    if (userData.role === 'student') {
+      localStorage.setItem(`studentData_${userId}`, JSON.stringify({
+        name: userData.name,
+        email: userData.email,
+        id: userId
+      }));
+    }
+    
+    // For companies, store company data
+    if (userData.role === 'company') {
+      localStorage.setItem(`companyData_${userId}`, JSON.stringify({
+        name: userData.companyName,
+        email: userData.email,
+        id: userId
+      }));
+    }
+    
+    // Store basic user info in localStorage for quick access
+    localStorage.setItem('currentUser', JSON.stringify({
+      uid: userId,
+      email: userData.email,
+      role: userData.role,
+      name: userData.name || userData.institutionName || userData.companyName || 'User'
+    }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,6 +102,140 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
     }
   };
 
+  const handleGoogleSignUp = async () => {
+    setGoogleLoading(true);
+    setError('');
+
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.addScope('email');
+      provider.addScope('profile');
+
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+
+      // Check if user already exists in Firestore
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      
+      if (userDoc.exists()) {
+        // User already exists, redirect to login
+        setError('An account with this Google email already exists. Please login instead.');
+        return;
+      }
+
+      // Create user profile based on selected role
+      await createGoogleUserProfile(user);
+
+    } catch (error) {
+      console.error('Google Sign-Up error:', error);
+      handleGoogleError(error);
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const createGoogleUserProfile = async (user) => {
+    let userData = {
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName || 'Google User',
+      role: formData.role,
+      createdAt: new Date(),
+      profileComplete: false,
+      emailVerified: user.emailVerified,
+      isGoogleAccount: true,
+      applications: []
+    };
+
+    // Add role-specific fields
+    switch (formData.role) {
+      case 'student':
+        userData = {
+          ...userData,
+          phone: formData.phone || '',
+          address: formData.address || '',
+          documents: {
+            resume: null,
+            transcripts: null,
+            certificates: null
+          },
+          studentMarks: {
+            mathematics: '',
+            english: '',
+            science: '',
+            overall: ''
+          }
+        };
+        break;
+      case 'institute':
+        userData = {
+          ...userData,
+          institutionName: formData.institutionName || user.displayName || 'Educational Institution',
+          institutionId: formData.selectedInstitution || 'custom',
+          phone: formData.phone || '',
+          address: formData.address || '',
+          description: formData.description || '',
+          isInstitutionAccount: true,
+          faculties: [],
+          courses: [],
+          verified: false,
+          profileComplete: false
+        };
+        break;
+      case 'company':
+        userData = {
+          ...userData,
+          companyName: formData.companyName || user.displayName || 'Company',
+          phone: formData.phone || '',
+          address: formData.address || '',
+          description: formData.description || '',
+          jobPostings: [],
+          approved: false,
+          profileComplete: false
+        };
+        break;
+      case 'admin':
+        userData = {
+          ...userData,
+          name: formData.name || user.displayName || 'Administrator',
+          permissions: ['all']
+        };
+        break;
+    }
+
+    await setDoc(doc(db, 'users', user.uid), userData);
+    
+    // Store user data in localStorage
+    storeUserData(user.uid, userData);
+    
+    setSuccess(`Google account registration successful! Welcome ${userData.name || user.displayName}.`);
+    
+    if (onLogin) {
+      setTimeout(() => {
+        onLogin(formData.role);
+      }, 2000);
+    }
+  };
+
+  const handleGoogleError = (error) => {
+    switch (error.code) {
+      case 'auth/popup-closed-by-user':
+        setError('Google sign-up was cancelled.');
+        break;
+      case 'auth/popup-blocked':
+        setError('Popup was blocked by your browser. Please allow popups for this site.');
+        break;
+      case 'auth/unauthorized-domain':
+        setError('This domain is not authorized for Google sign-in.');
+        break;
+      case 'auth/network-request-failed':
+        setError('Network error. Please check your internet connection.');
+        break;
+      default:
+        setError('Google sign-up failed. Please try again.');
+    }
+  };
+
   // Enhanced institution registration function
   const registerInstitution = async (institutionData) => {
     try {
@@ -69,7 +245,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         institutionData.password
       );
       
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
+      const userData = {
         uid: userCredential.user.uid,
         email: institutionData.email,
         institutionName: institutionData.institutionName,
@@ -84,9 +260,14 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         courses: [],
         applications: [],
         profileComplete: false,
-        verified: false, // Admin verification needed
+        verified: false,
         emailVerified: false
-      });
+      };
+
+      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+      
+      // Store user data
+      storeUserData(userCredential.user.uid, userData);
       
       return userCredential.user;
     } catch (error) {
@@ -103,7 +284,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         studentData.password
       );
       
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
+      const userData = {
         uid: userCredential.user.uid,
         email: studentData.email,
         name: studentData.name,
@@ -125,7 +306,12 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
           science: '',
           overall: ''
         }
-      });
+      };
+
+      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+      
+      // Store user data
+      storeUserData(userCredential.user.uid, userData);
       
       return userCredential.user;
     } catch (error) {
@@ -142,7 +328,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         companyData.password
       );
       
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
+      const userData = {
         uid: userCredential.user.uid,
         email: companyData.email,
         companyName: companyData.companyName,
@@ -152,9 +338,14 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         role: 'company',
         createdAt: new Date(),
         jobPostings: [],
-        approved: false, // Admin approval needed
+        approved: false,
         emailVerified: false
-      });
+      };
+
+      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+      
+      // Store user data
+      storeUserData(userCredential.user.uid, userData);
       
       return userCredential.user;
     } catch (error) {
@@ -171,7 +362,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         adminData.password
       );
       
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
+      const userData = {
         uid: userCredential.user.uid,
         email: adminData.email,
         name: adminData.name,
@@ -179,7 +370,12 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
         createdAt: new Date(),
         permissions: ['all'],
         emailVerified: false
-      });
+      };
+
+      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+      
+      // Store user data
+      storeUserData(userCredential.user.uid, userData);
       
       return userCredential.user;
     } catch (error) {
@@ -253,39 +449,6 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
 
       // Send email verification
       await sendEmailVerification(user);
-
-      // Store user data in localStorage for immediate access
-      const userData = {
-        uid: user.uid,
-        email: user.email,
-        role: formData.role,
-        name: formData.name || formData.institutionName || formData.companyName || 'User'
-      };
-
-      // Role-specific localStorage data
-      if (formData.role === 'institute') {
-        localStorage.setItem(`instituteData_${user.uid}`, JSON.stringify({
-          name: formData.institutionName,
-          email: formData.email,
-          id: user.uid
-        }));
-      } else if (formData.role === 'student') {
-        localStorage.setItem(`studentData_${user.uid}`, JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          id: user.uid
-        }));
-      } else if (formData.role === 'company') {
-        localStorage.setItem(`companyData_${user.uid}`, JSON.stringify({
-          name: formData.companyName,
-          email: formData.email,
-          id: user.uid
-        }));
-      }
-
-      // Store basic user info
-      localStorage.setItem('currentUser', JSON.stringify(userData));
-      localStorage.setItem(`userRole_${user.uid}`, formData.role);
 
       setSuccess(`Registration successful! A verification email has been sent to ${formData.email}. Please verify your email before logging in.`);
       
@@ -755,6 +918,24 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
       transition: 'all 0.3s ease',
       marginBottom: '20px'
     },
+    googleButton: {
+      width: '100%',
+      padding: '12px',
+      background: 'white',
+      color: '#333',
+      border: '2px solid #ddd',
+      borderRadius: '8px',
+      fontSize: '16px',
+      fontWeight: '600',
+      cursor: 'pointer',
+      marginBottom: '25px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px',
+      transition: 'all 0.3s ease',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    },
     switchText: {
       textAlign: 'center',
       color: '#666',
@@ -780,6 +961,22 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
       color: '#666',
       marginTop: '10px',
       textAlign: 'center'
+    },
+    divider: {
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: '25px'
+    },
+    dividerLine: {
+      flex: 1,
+      height: '1px',
+      background: '#e1e5e9'
+    },
+    dividerText: {
+      padding: '0 15px',
+      color: '#666',
+      fontSize: '14px',
+      fontWeight: '500'
     }
   };
 
@@ -800,6 +997,46 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
           </div>
         )}
 
+        {/* Google Sign-Up Button */}
+        <button
+          onClick={handleGoogleSignUp}
+          disabled={googleLoading}
+          style={{
+            ...styles.googleButton,
+            opacity: googleLoading ? 0.7 : 1,
+            cursor: googleLoading ? 'not-allowed' : 'pointer'
+          }}
+          onMouseEnter={(e) => {
+            if (!googleLoading) {
+              e.target.style.borderColor = '#4285f4';
+              e.target.style.boxShadow = '0 4px 8px rgba(66, 133, 244, 0.2)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!googleLoading) {
+              e.target.style.borderColor = '#ddd';
+              e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            }
+          }}
+        >
+          {googleLoading ? (
+            <span style={{ animation: 'spin 1s linear infinite' }}>⏳</span>
+          ) : (
+            <img 
+              src="https://developers.google.com/identity/images/g-logo.png" 
+              alt="Google" 
+              style={{ width: '20px', height: '20px' }}
+            />
+          )}
+          {googleLoading ? 'Creating Account...' : 'Sign up with Google'}
+        </button>
+
+        <div style={styles.divider}>
+          <div style={styles.dividerLine}></div>
+          <span style={styles.dividerText}>OR</span>
+          <div style={styles.dividerLine}></div>
+        </div>
+
         <form onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
             <label style={styles.label}>
@@ -811,10 +1048,10 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
               onChange={handleChange}
               style={styles.select}
             >
-              <option value="student">Student</option>
-              <option value="institute">Educational Institute</option>
-              <option value="company">Company/Employer</option>
-              <option value="admin">Administrator</option>
+              <option value="student">🎓 Student</option>
+              <option value="institute">🏫 Educational Institute</option>
+              <option value="company">💼 Company/Employer</option>
+              <option value="admin">⚙️ Administrator</option>
             </select>
             <div style={styles.roleDescription}>
               {formData.role === 'student' && 'Apply for courses and track your career progress'}
@@ -891,7 +1128,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
             {loading ? (
               <>
                 <span style={{ display: 'inline-block', animation: 'spin 1s linear infinite', marginRight: '8px' }}>
-                  
+                  ⏳
                 </span>
                 Creating Account...
               </>
