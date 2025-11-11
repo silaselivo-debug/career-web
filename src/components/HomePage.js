@@ -29,10 +29,10 @@ const HomePage = ({ onNavigate }) => {
   ];
 
   const stats = [
-    { number: '50K+', label: 'Active Students' },
-    { number: '500+', label: 'Partner Institutes' },
-    { number: '1K+', label: 'Corporate Partners' },
-    { number: '95%', label: 'Success Rate' }
+    { number: '', label: 'Active Students' },
+    { number: '', label: 'Partner Institutes' },
+    { number: '', label: 'Corporate Partners' },
+    { number: '', label: 'Success Rate' }
   ];
 
   const footerLinks = {
@@ -46,7 +46,7 @@ const HomePage = ({ onNavigate }) => {
     homePage: {
       minHeight: '100vh',
       fontFamily: "'Poppins', 'Segoe UI', sans-serif",
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+      background: 'blue',
       overflowX: 'hidden'
     },
     
@@ -250,7 +250,7 @@ const HomePage = ({ onNavigate }) => {
       border: 'none',
       borderRadius: '30px',
       cursor: 'pointer',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: 'e',
       color: 'white',
       transition: 'all 0.3s ease',
       boxShadow: '0 10px 30px rgba(102, 126, 234, 0.3)'
