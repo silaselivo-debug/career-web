@@ -811,10 +811,10 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
               onChange={handleChange}
               style={styles.select}
             >
-              <option value="student">🎓 Student</option>
-              <option value="institute">🏫 Educational Institute</option>
-              <option value="company">💼 Company/Employer</option>
-              <option value="admin">⚙️ Administrator</option>
+              <option value="student"> Student</option>
+              <option value="institute"> Educational Institute</option>
+              <option value="company"> Company/Employer</option>
+              <option value="admin"> Administrator</option>
             </select>
             <div style={styles.roleDescription}>
               {formData.role === 'student' && 'Apply for courses and track your career progress'}
@@ -891,7 +891,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
             {loading ? (
               <>
                 <span style={{ display: 'inline-block', animation: 'spin 1s linear infinite', marginRight: '8px' }}>
-                  ⏳
+                  
                 </span>
                 Creating Account...
               </>
