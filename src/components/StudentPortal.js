@@ -235,10 +235,99 @@ const StudentPortal = ({ user, onLogout }) => {
     }
   ];
 
+  // Footer Component (Integrated from HomePage)
+  const Footer = () => {
+    const [hoveredFooterLink, setHoveredFooterLink] = React.useState(null);
+
+    const footerLinks = {
+      'Students': ['Browse Courses', 'Career Support', 'Job Portal', 'Resources'],
+      'Institutes': ['Dashboard', 'Analytics', 'Partnerships', 'Settings'],
+      'Companies': ['Talent Search', 'Post Jobs', 'Campus Connect', 'Analytics'],
+      'Support': ['Help Center', 'Contact', 'Documentation', 'Status']
+    };
+
+    const footerStyles = {
+      footer: {
+        background: '#2c3e50',
+        color: 'white',
+        padding: '4rem 2rem 2rem',
+        marginTop: 'auto'
+      },
+      footerContent: {
+        maxWidth: '1200px',
+        margin: '0 auto',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '3rem',
+        marginBottom: '3rem'
+      },
+      footerColumn: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+      },
+      footerTitle: {
+        fontSize: '1.2rem',
+        fontWeight: 700,
+        marginBottom: '1rem',
+        color: '#ecf0f1'
+      },
+      footerLink: {
+        color: '#bdc3c7',
+        textDecoration: 'none',
+        transition: 'all 0.3s ease',
+        padding: '0.3rem 0',
+        cursor: 'pointer'
+      },
+      footerLinkHover: {
+        color: 'white',
+        transform: 'translateX(5px)'
+      },
+      footerBottom: {
+        maxWidth: '1200px',
+        margin: '0 auto',
+        paddingTop: '2rem',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        textAlign: 'center',
+        color: '#95a5a6'
+      }
+    };
+
+    return (
+      <footer style={footerStyles.footer}>
+        <div style={footerStyles.footerContent}>
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category} style={footerStyles.footerColumn}>
+              <h4 style={footerStyles.footerTitle}>{category}</h4>
+              {links.map((link, index) => (
+                <a
+                  key={index}
+                  href="#"
+                  style={{
+                    ...footerStyles.footerLink,
+                    ...(hoveredFooterLink === `${category}-${index}` && footerStyles.footerLinkHover)
+                  }}
+                  onMouseEnter={() => setHoveredFooterLink(`${category}-${index}`)}
+                  onMouseLeave={() => setHoveredFooterLink(null)}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div style={footerStyles.footerBottom}>
+          <p>&copy; 2024 LearnBridge. Empowering education through technology and innovation.</p>
+        </div>
+      </footer>
+    );
+  };
+
   const styles = {
     portal: {
       minHeight: '100vh',
-      background: '#f3f4f6',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
       display: 'flex',
       flexDirection: 'column'
@@ -250,15 +339,16 @@ const StudentPortal = ({ user, onLogout }) => {
       flex: '1'
     },
     header: {
-      background: 'white',
-      padding: '20px',
-      borderRadius: '8px',
-      marginBottom: '20px',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      background: 'rgba(255, 255, 255, 0.95)',
+      backdropFilter: 'blur(20px)',
+      padding: '25px 30px',
+      borderRadius: '20px',
+      marginBottom: '25px',
+      boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      border: '1px solid #e5e7eb'
+      border: '1px solid rgba(255, 255, 255, 0.2)'
     },
     headerContent: {
       display: 'flex',
@@ -266,219 +356,242 @@ const StudentPortal = ({ user, onLogout }) => {
       gap: '5px'
     },
     headerTitle: {
-      fontSize: '1.5rem',
-      fontWeight: 700,
-      color: '#2563eb',
+      fontSize: '2rem',
+      fontWeight: 800,
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
       margin: 0
     },
     headerSubtitle: {
       fontSize: '1rem',
-      color: '#6b7280',
+      color: '#666',
       margin: 0,
       fontWeight: 500
     },
     nav: {
       display: 'flex',
       gap: '10px',
-      marginBottom: '20px',
+      marginBottom: '30px',
       flexWrap: 'wrap',
-      background: 'white',
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(10px)',
       padding: '15px',
-      borderRadius: '8px',
-      border: '1px solid #e5e7eb'
+      borderRadius: '15px',
+      border: '1px solid rgba(255, 255, 255, 0.1)'
     },
     navButton: {
-      padding: '10px 20px',
-      border: '1px solid #d1d5db',
-      borderRadius: '6px',
+      padding: '12px 25px',
+      border: 'none',
+      borderRadius: '12px',
       cursor: 'pointer',
       fontSize: '14px',
       fontWeight: 600,
-      transition: 'all 0.2s ease',
-      background: 'white',
-      color: '#374151'
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      background: 'rgba(255, 255, 255, 0.1)',
+      color: 'white',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      backdropFilter: 'blur(10px)'
     },
     navButtonActive: {
-      background: '#2563eb',
+      background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
       color: 'white',
-      borderColor: '#2563eb'
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      boxShadow: '0 5px 15px rgba(255, 107, 107, 0.3)'
     },
     logoutButton: {
-      padding: '8px 16px',
-      border: '1px solid #d1d5db',
-      borderRadius: '6px',
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '10px',
       cursor: 'pointer',
       fontSize: '14px',
       fontWeight: 600,
-      background: 'white',
-      color: '#374151',
-      transition: 'all 0.2s ease'
+      background: 'rgba(255, 255, 255, 0.9)',
+      color: '#667eea',
+      transition: 'all 0.3s ease',
+      border: '1px solid rgba(255, 255, 255, 0.3)'
     },
     card: {
-      background: 'white',
-      padding: '24px',
-      borderRadius: '8px',
-      marginBottom: '20px',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-      border: '1px solid #e5e7eb'
+      background: 'rgba(255, 255, 255, 0.95)',
+      backdropFilter: 'blur(20px)',
+      padding: '30px',
+      borderRadius: '20px',
+      marginBottom: '25px',
+      boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      transition: 'all 0.3s ease'
+    },
+    cardHover: {
+      transform: 'translateY(-5px)',
+      boxShadow: '0 20px 50px rgba(0,0,0,0.15)'
     },
     grid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-      gap: '20px',
-      marginTop: '20px'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+      gap: '25px',
+      marginTop: '25px'
     },
     formGroup: {
-      marginBottom: '16px'
+      marginBottom: '20px'
     },
     label: {
       display: 'block',
       marginBottom: '8px',
       fontWeight: 600,
-      color: '#374151',
+      color: '#2d3748',
       fontSize: '14px'
     },
     input: {
       width: '100%',
-      padding: '10px 12px',
-      border: '1px solid #d1d5db',
-      borderRadius: '6px',
+      padding: '12px 15px',
+      border: '2px solid #e2e8f0',
+      borderRadius: '10px',
       fontSize: '14px',
-      transition: 'all 0.2s ease',
+      transition: 'all 0.3s ease',
       background: 'white'
+    },
+    inputFocus: {
+      borderColor: '#667eea',
+      boxShadow: '0 0 0 3px rgba(102, 126, 234, 0.1)'
     },
     select: {
       width: '100%',
-      padding: '10px 12px',
-      border: '1px solid #d1d5db',
-      borderRadius: '6px',
+      padding: '12px 15px',
+      border: '2px solid #e2e8f0',
+      borderRadius: '10px',
       fontSize: '14px',
       background: 'white',
-      cursor: 'pointer'
+      transition: 'all 0.3s ease'
     },
     textarea: {
       width: '100%',
-      padding: '10px 12px',
-      border: '1px solid #d1d5db',
-      borderRadius: '6px',
+      padding: '12px 15px',
+      border: '2px solid #e2e8f0',
+      borderRadius: '10px',
       fontSize: '14px',
-      minHeight: '100px',
+      minHeight: '120px',
       resize: 'vertical',
+      transition: 'all 0.3s ease',
       background: 'white'
     },
     fileInput: {
       width: '100%',
-      padding: '10px 12px',
-      border: '1px dashed #d1d5db',
-      borderRadius: '6px',
+      padding: '12px 15px',
+      border: '2px dashed #cbd5e0',
+      borderRadius: '10px',
       fontSize: '14px',
-      background: '#f9fafb'
+      background: '#f7fafc',
+      transition: 'all 0.3s ease'
     },
     primaryButton: {
-      background: '#2563eb',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       color: 'white',
       border: 'none',
-      padding: '12px 20px',
-      borderRadius: '6px',
+      padding: '14px 28px',
+      borderRadius: '12px',
       fontSize: '14px',
       fontWeight: 600,
       cursor: 'pointer',
-      transition: 'background-color 0.2s ease'
+      transition: 'all 0.3s ease',
+      boxShadow: '0 5px 15px rgba(102, 126, 234, 0.3)'
     },
     secondaryButton: {
-      background: 'white',
-      color: '#2563eb',
-      border: '1px solid #2563eb',
-      padding: '10px 18px',
-      borderRadius: '6px',
+      background: 'rgba(255, 255, 255, 0.9)',
+      color: '#667eea',
+      border: '2px solid #667eea',
+      padding: '12px 25px',
+      borderRadius: '10px',
       fontSize: '14px',
       fontWeight: 600,
       cursor: 'pointer',
-      transition: 'all 0.2s ease'
+      transition: 'all 0.3s ease'
     },
     applicationCard: {
-      background: '#f9fafb',
-      border: '1px solid #e5e7eb',
-      padding: '16px',
-      borderRadius: '8px',
-      marginBottom: '12px'
+      background: 'linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%)',
+      border: '1px solid #e2e8f0',
+      padding: '20px',
+      borderRadius: '15px',
+      marginBottom: '15px',
+      transition: 'all 0.3s ease'
     },
     status: {
-      padding: '4px 8px',
-      borderRadius: '12px',
-      fontSize: '11px',
-      fontWeight: 600,
+      padding: '6px 12px',
+      borderRadius: '20px',
+      fontSize: '12px',
+      fontWeight: 700,
       display: 'inline-block',
-      marginLeft: '8px'
+      marginLeft: '10px'
     },
-    statusPending: { background: '#fef3c7', color: '#92400e' },
-    statusAdmitted: { background: '#dbeafe', color: '#1e40af' },
-    statusRejected: { background: '#fee2e2', color: '#991b1b' },
+    statusPending: { background: '#fff3cd', color: '#856404' },
+    statusAdmitted: { background: '#d1edff', color: '#004085' },
+    statusRejected: { background: '#f8d7da', color: '#721c24' },
     loading: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       height: '200px',
-      color: '#374151',
-      fontSize: '16px',
+      color: 'white',
+      fontSize: '18px',
       fontWeight: 600
     },
     institutionSelector: {
-      background: '#f9fafb',
-      padding: '20px',
-      borderRadius: '8px',
-      marginBottom: '20px',
-      border: '1px solid #e5e7eb'
+      background: 'linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%)',
+      padding: '25px',
+      borderRadius: '15px',
+      marginBottom: '25px',
+      border: '2px solid #e2e8f0'
     },
     facultySection: {
-      background: 'white',
-      padding: '16px',
-      borderRadius: '8px',
-      marginBottom: '16px',
-      border: '1px solid #e5e7eb'
+      background: 'rgba(255, 255, 255, 0.8)',
+      padding: '20px',
+      borderRadius: '12px',
+      marginBottom: '20px',
+      border: '1px solid #e2e8f0'
     },
     marksForm: {
-      background: '#fffbeb',
-      padding: '16px',
-      borderRadius: '8px',
-      marginBottom: '16px',
-      border: '1px solid #fcd34d'
+      background: 'linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%)',
+      padding: '20px',
+      borderRadius: '12px',
+      marginBottom: '20px',
+      border: '1px solid #fdcb6e'
     },
     websiteLink: {
-      color: '#2563eb',
+      color: '#667eea',
       textDecoration: 'none',
       fontWeight: 600,
-      marginRight: '12px',
-      padding: '6px 12px',
-      background: '#dbeafe',
-      borderRadius: '6px',
-      fontSize: '12px'
+      marginRight: '15px',
+      padding: '8px 15px',
+      background: 'rgba(102, 126, 234, 0.1)',
+      borderRadius: '8px',
+      transition: 'all 0.3s ease'
     },
     emailLink: {
-      color: '#16a34a',
+      color: '#28a745',
       textDecoration: 'none',
       fontWeight: 600,
-      padding: '6px 12px',
-      background: '#dcfce7',
-      borderRadius: '6px',
-      fontSize: '12px'
+      padding: '8px 15px',
+      background: 'rgba(40, 167, 69, 0.1)',
+      borderRadius: '8px',
+      transition: 'all 0.3s ease'
     },
     statsGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-      gap: '16px',
-      marginTop: '16px'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gap: '20px',
+      marginTop: '20px'
     },
     statCard: {
-      background: '#2563eb',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       color: 'white',
-      padding: '20px',
-      borderRadius: '8px',
-      textAlign: 'center'
+      padding: '25px',
+      borderRadius: '15px',
+      textAlign: 'center',
+      boxShadow: '0 8px 25px rgba(102, 126, 234, 0.3)'
     },
     statNumber: {
-      fontSize: '2rem',
-      fontWeight: 700,
+      fontSize: '2.5rem',
+      fontWeight: 800,
       marginBottom: '5px'
     },
     statLabel: {
@@ -490,6 +603,7 @@ const StudentPortal = ({ user, onLogout }) => {
 
   // Hover states
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -706,7 +820,7 @@ const StudentPortal = ({ user, onLogout }) => {
 
   const renderDashboard = () => (
     <div>
-      <h3 style={{ color: '#374151', marginBottom: '20px', fontSize: '1.5rem', fontWeight: 700 }}>Student Dashboard</h3>
+      <h3 style={{ color: 'white', marginBottom: '20px', fontSize: '1.8rem', fontWeight: 700 }}>Student Dashboard</h3>
       
       <div style={styles.statsGrid}>
         <div style={styles.statCard}>
@@ -728,9 +842,16 @@ const StudentPortal = ({ user, onLogout }) => {
       </div>
 
       <div style={styles.grid}>
-        <div style={styles.card}>
-          <h4 style={{ marginBottom: '15px', color: '#374151' }}>Application Overview</h4>
-          <p style={{ color: '#6b7280', marginBottom: '10px' }}>Track your course applications and their current status</p>
+        <div 
+          style={{
+            ...styles.card,
+            ...(hoveredCard === 'applications' && styles.cardHover)
+          }}
+          onMouseEnter={() => setHoveredCard('applications')}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
+          <h4 style={{ marginBottom: '15px', color: '#2d3748' }}>Application Overview</h4>
+          <p style={{ color: '#718096', marginBottom: '10px' }}>Track your course applications and their current status</p>
           <button 
             style={styles.primaryButton}
             onClick={() => setActiveTab('applications')}
@@ -739,29 +860,43 @@ const StudentPortal = ({ user, onLogout }) => {
           </button>
         </div>
         
-        <div style={styles.card}>
-          <h4 style={{ marginBottom: '15px', color: '#374151' }}>Recent Updates</h4>
+        <div 
+          style={{
+            ...styles.card,
+            ...(hoveredCard === 'notifications' && styles.cardHover)
+          }}
+          onMouseEnter={() => setHoveredCard('notifications')}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
+          <h4 style={{ marginBottom: '15px', color: '#2d3748' }}>Recent Updates</h4>
           {notifications.length > 0 ? (
             notifications.slice(0, 3).map((notification, index) => {
               const uniqueKey = `${notification.id}-${index}-${notification.timestamp}`;
               return (
-                <div key={uniqueKey} style={{ padding: '10px', borderBottom: '1px solid #e5e7eb', background: '#f9fafb', borderRadius: '6px', marginBottom: '6px' }}>
-                  <small style={{ color: '#4b5563', fontWeight: 500 }}>{notification.message}</small>
+                <div key={uniqueKey} style={{ padding: '12px', borderBottom: '1px solid #e2e8f0', background: '#f7fafc', borderRadius: '8px', marginBottom: '8px' }}>
+                  <small style={{ color: '#4a5568', fontWeight: 500 }}>{notification.message}</small>
                   <br />
-                  <small style={{ color: '#9ca3af' }}>
+                  <small style={{ color: '#a0aec0' }}>
                     {notification.timestamp.toLocaleDateString()}
                   </small>
                 </div>
               );
             })
           ) : (
-            <p style={{ color: '#9ca3af' }}>No new notifications</p>
+            <p style={{ color: '#a0aec0' }}>No new notifications</p>
           )}
         </div>
         
-        <div style={styles.card}>
-          <h4 style={{ marginBottom: '15px', color: '#374151' }}>Career Opportunities</h4>
-          <p style={{ color: '#6b7280', marginBottom: '10px' }}>Explore job openings and internship opportunities</p>
+        <div 
+          style={{
+            ...styles.card,
+            ...(hoveredCard === 'jobs' && styles.cardHover)
+          }}
+          onMouseEnter={() => setHoveredCard('jobs')}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
+          <h4 style={{ marginBottom: '15px', color: '#2d3748' }}>Career Opportunities</h4>
+          <p style={{ color: '#718096', marginBottom: '10px' }}>Explore job openings and internship opportunities</p>
           <button 
             style={styles.primaryButton}
             onClick={() => setActiveTab('jobs')}
@@ -770,9 +905,16 @@ const StudentPortal = ({ user, onLogout }) => {
           </button>
         </div>
 
-        <div style={styles.card}>
-          <h4 style={{ marginBottom: '15px', color: '#374151' }}>Continue Learning</h4>
-          <p style={{ color: '#6b7280', marginBottom: '10px' }}>Browse and apply for courses from top institutions in Lesotho</p>
+        <div 
+          style={{
+            ...styles.card,
+            ...(hoveredCard === 'courses' && styles.cardHover)
+          }}
+          onMouseEnter={() => setHoveredCard('courses')}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
+          <h4 style={{ marginBottom: '15px', color: '#2d3748' }}>Continue Learning</h4>
+          <p style={{ color: '#718096', marginBottom: '10px' }}>Browse and apply for courses from top institutions in Lesotho</p>
           <button 
             style={styles.primaryButton}
             onClick={() => setActiveTab('apply')}
@@ -789,10 +931,10 @@ const StudentPortal = ({ user, onLogout }) => {
     
     return (
       <div>
-        <h3 style={{ color: '#374151', marginBottom: '20px', fontSize: '1.5rem', fontWeight: 700 }}>Course Applications</h3>
+        <h3 style={{ color: 'white', marginBottom: '20px', fontSize: '1.8rem', fontWeight: 700 }}>Course Applications</h3>
         
         <div style={styles.institutionSelector}>
-          <h4 style={{ marginBottom: '15px', color: '#374151' }}>Select Your Preferred Institution</h4>
+          <h4 style={{ marginBottom: '15px', color: '#2d3748' }}>Select Your Preferred Institution</h4>
           <div style={styles.formGroup}>
             <label style={styles.label}>Choose an institution in Lesotho:</label>
             <select
@@ -843,13 +985,13 @@ const StudentPortal = ({ user, onLogout }) => {
 
         {selectedInstitution && currentInstitution ? (
           <div>
-            <h4 style={{ color: '#374151', marginBottom: '20px', fontSize: '1.2rem' }}>
+            <h4 style={{ color: 'white', marginBottom: '20px', fontSize: '1.4rem' }}>
               Available Programs at {currentInstitution.name}
             </h4>
             
             {currentInstitution.faculties.map((faculty, facultyIndex) => (
               <div key={`${faculty.name}-${facultyIndex}`} style={styles.facultySection}>
-                <h5 style={{ margin: '0 0 20px 0', color: '#374151', fontSize: '1.1rem', fontWeight: 600 }}>{faculty.name}</h5>
+                <h5 style={{ margin: '0 0 20px 0', color: '#2d3748', fontSize: '1.2rem', fontWeight: 600 }}>{faculty.name}</h5>
                 <div style={styles.grid}>
                   {faculty.courses.map((course, courseIndex) => {
                     const courseKey = `${currentInstitution.id}-${faculty.name}-${course.name}-${courseIndex}`;
@@ -857,15 +999,20 @@ const StudentPortal = ({ user, onLogout }) => {
                     return (
                       <div 
                         key={courseKey} 
-                        style={styles.card}
+                        style={{
+                          ...styles.card,
+                          ...(hoveredCard === courseKey && styles.cardHover)
+                        }}
+                        onMouseEnter={() => setHoveredCard(courseKey)}
+                        onMouseLeave={() => setHoveredCard(null)}
                       >
-                        <h4 style={{ color: '#374151', marginBottom: '10px' }}>{course.name}</h4>
-                        <p style={{ color: '#6b7280', marginBottom: '8px' }}><strong>Duration:</strong> {course.duration}</p>
-                        <p style={{ color: '#6b7280', marginBottom: '8px' }}><strong>Requirements:</strong> {course.requirements}</p>
-                        <p style={{ color: '#4b5563', marginBottom: '15px', fontStyle: 'italic' }}>{course.description}</p>
+                        <h4 style={{ color: '#2d3748', marginBottom: '10px' }}>{course.name}</h4>
+                        <p style={{ color: '#718096', marginBottom: '8px' }}><strong>Duration:</strong> {course.duration}</p>
+                        <p style={{ color: '#718096', marginBottom: '8px' }}><strong>Requirements:</strong> {course.requirements}</p>
+                        <p style={{ color: '#4a5568', marginBottom: '15px', fontStyle: 'italic' }}>{course.description}</p>
                         
                         <div style={styles.marksForm}>
-                          <h5 style={{ marginBottom: '15px', color: '#92400e' }}>Enter Your High School Marks (%)</h5>
+                          <h5 style={{ marginBottom: '15px', color: '#856404' }}>Enter Your High School Marks (%)</h5>
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
                             <div style={styles.formGroup}>
                               <label style={styles.label}>Mathematics</label>
@@ -873,7 +1020,12 @@ const StudentPortal = ({ user, onLogout }) => {
                                 type="number"
                                 value={studentMarks.mathematics}
                                 onChange={(e) => setStudentMarks({...studentMarks, mathematics: e.target.value})}
-                                style={styles.input}
+                                style={{
+                                  ...styles.input,
+                                  ...(focusedInput === 'math' && styles.inputFocus)
+                                }}
+                                onFocus={() => setFocusedInput('math')}
+                                onBlur={() => setFocusedInput(null)}
                                 placeholder="Math %"
                                 min="0"
                                 max="100"
@@ -885,7 +1037,12 @@ const StudentPortal = ({ user, onLogout }) => {
                                 type="number"
                                 value={studentMarks.english}
                                 onChange={(e) => setStudentMarks({...studentMarks, english: e.target.value})}
-                                style={styles.input}
+                                style={{
+                                  ...styles.input,
+                                  ...(focusedInput === 'english' && styles.inputFocus)
+                                }}
+                                onFocus={() => setFocusedInput('english')}
+                                onBlur={() => setFocusedInput(null)}
                                 placeholder="English %"
                                 min="0"
                                 max="100"
@@ -897,7 +1054,12 @@ const StudentPortal = ({ user, onLogout }) => {
                                 type="number"
                                 value={studentMarks.science}
                                 onChange={(e) => setStudentMarks({...studentMarks, science: e.target.value})}
-                                style={styles.input}
+                                style={{
+                                  ...styles.input,
+                                  ...(focusedInput === 'science' && styles.inputFocus)
+                                }}
+                                onFocus={() => setFocusedInput('science')}
+                                onBlur={() => setFocusedInput(null)}
                                 placeholder="Science %"
                                 min="0"
                                 max="100"
@@ -909,7 +1071,12 @@ const StudentPortal = ({ user, onLogout }) => {
                                 type="number"
                                 value={studentMarks.overall}
                                 onChange={(e) => setStudentMarks({...studentMarks, overall: e.target.value})}
-                                style={styles.input}
+                                style={{
+                                  ...styles.input,
+                                  ...(focusedInput === 'overall' && styles.inputFocus)
+                                }}
+                                onFocus={() => setFocusedInput('overall')}
+                                onBlur={() => setFocusedInput(null)}
                                 placeholder="Overall %"
                                 min="0"
                                 max="100"
@@ -934,21 +1101,21 @@ const StudentPortal = ({ user, onLogout }) => {
           </div>
         ) : (
           <div style={styles.card}>
-            <h4 style={{ color: '#374151', marginBottom: '15px' }}>Available Institutions in Lesotho</h4>
-            <p style={{ color: '#6b7280', marginBottom: '20px' }}>Select an institution to view available courses and programs. Each institution offers unique opportunities for your academic journey.</p>
+            <h4 style={{ color: '#2d3748', marginBottom: '15px' }}>Available Institutions in Lesotho</h4>
+            <p style={{ color: '#718096', marginBottom: '20px' }}>Select an institution to view available courses and programs. Each institution offers unique opportunities for your academic journey.</p>
             <div style={styles.grid}>
               {lesothoInstitutions.map(inst => (
                 <div 
                   key={inst.id}
                   style={{
                     ...styles.card,
-                    background: '#f9fafb',
+                    background: 'linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%)',
                     cursor: 'pointer'
                   }}
                   onClick={() => setSelectedInstitution(inst.id)}
                 >
-                  <h5 style={{ color: '#374151', marginBottom: '10px' }}>{inst.name}</h5>
-                  <p style={{ color: '#6b7280', fontSize: '0.9rem' }}>Click to view programs and courses</p>
+                  <h5 style={{ color: '#2d3748', marginBottom: '10px' }}>{inst.name}</h5>
+                  <p style={{ color: '#718096', fontSize: '0.9rem' }}>Click to view programs and courses</p>
                 </div>
               ))}
             </div>
@@ -960,11 +1127,11 @@ const StudentPortal = ({ user, onLogout }) => {
 
   const renderApplications = () => (
     <div>
-      <h3 style={{ color: '#374151', marginBottom: '20px', fontSize: '1.5rem', fontWeight: 700 }}>My Applications</h3>
+      <h3 style={{ color: 'white', marginBottom: '20px', fontSize: '1.8rem', fontWeight: 700 }}>My Applications</h3>
       {applications.length === 0 ? (
         <div style={styles.card}>
-          <h4 style={{ color: '#374151', marginBottom: '15px' }}>No Applications Yet</h4>
-          <p style={{ color: '#6b7280', marginBottom: '20px' }}>You haven't submitted any course applications yet. Start your academic journey by browsing available programs.</p>
+          <h4 style={{ color: '#2d3748', marginBottom: '15px' }}>No Applications Yet</h4>
+          <p style={{ color: '#718096', marginBottom: '20px' }}>You haven't submitted any course applications yet. Start your academic journey by browsing available programs.</p>
           <button 
             style={styles.primaryButton}
             onClick={() => setActiveTab('apply')}
@@ -979,13 +1146,18 @@ const StudentPortal = ({ user, onLogout }) => {
           return (
             <div 
               key={uniqueKey} 
-              style={styles.applicationCard}
+              style={{
+                ...styles.applicationCard,
+                ...(hoveredCard === uniqueKey && styles.cardHover)
+              }}
+              onMouseEnter={() => setHoveredCard(uniqueKey)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
                 <div>
-                  <h4 style={{ color: '#374151', margin: '0 0 8px 0' }}>{application.courseName}</h4>
-                  <p style={{ color: '#6b7280', margin: '0 0 5px 0' }}><strong>Institution:</strong> {application.institutionName}</p>
-                  <p style={{ color: '#6b7280', margin: '0 0 5px 0' }}><strong>Faculty:</strong> {application.facultyName}</p>
+                  <h4 style={{ color: '#2d3748', margin: '0 0 8px 0' }}>{application.courseName}</h4>
+                  <p style={{ color: '#718096', margin: '0 0 5px 0' }}><strong>Institution:</strong> {application.institutionName}</p>
+                  <p style={{ color: '#718096', margin: '0 0 5px 0' }}><strong>Faculty:</strong> {application.facultyName}</p>
                 </div>
                 <div>
                   <span style={{
@@ -1000,12 +1172,12 @@ const StudentPortal = ({ user, onLogout }) => {
               </div>
               
               <div style={{ marginBottom: '15px' }}>
-                <p style={{ color: '#4b5563', margin: '0 0 8px 0' }}><strong>Program Requirements:</strong> {application.courseRequirements}</p>
-                <p style={{ color: '#4b5563', margin: '0 0 8px 0' }}><strong>Your Academic Profile:</strong> Mathematics: {application.studentMarks?.mathematics}%, 
+                <p style={{ color: '#4a5568', margin: '0 0 8px 0' }}><strong>Program Requirements:</strong> {application.courseRequirements}</p>
+                <p style={{ color: '#4a5568', margin: '0 0 8px 0' }}><strong>Your Academic Profile:</strong> Mathematics: {application.studentMarks?.mathematics}%, 
                     English: {application.studentMarks?.english}%, 
                     Science: {application.studentMarks?.science}%, 
                     Overall: {application.studentMarks?.overall}%</p>
-                <p style={{ color: '#9ca3af', margin: 0 }}>
+                <p style={{ color: '#a0aec0', margin: 0 }}>
                   <strong>Applied:</strong> {
                     application.appliedAt?.toDate ? 
                     application.appliedAt.toDate().toLocaleDateString() : 
@@ -1043,11 +1215,11 @@ const StudentPortal = ({ user, onLogout }) => {
 
   const renderJobPortal = () => (
     <div>
-      <h3 style={{ color: '#374151', marginBottom: '20px', fontSize: '1.5rem', fontWeight: 700 }}>Career Opportunities</h3>
+      <h3 style={{ color: 'white', marginBottom: '20px', fontSize: '1.8rem', fontWeight: 700 }}>Career Opportunities</h3>
       {jobPostings.length === 0 ? (
         <div style={styles.card}>
-          <h4 style={{ color: '#374151', marginBottom: '15px' }}>No Job Postings Available</h4>
-          <p style={{ color: '#6b7280' }}>Check back later for new career opportunities and internship positions.</p>
+          <h4 style={{ color: '#2d3748', marginBottom: '15px' }}>No Job Postings Available</h4>
+          <p style={{ color: '#718096' }}>Check back later for new career opportunities and internship positions.</p>
         </div>
       ) : (
         <div style={styles.grid}>
@@ -1057,15 +1229,20 @@ const StudentPortal = ({ user, onLogout }) => {
             return (
               <div 
                 key={jobKey} 
-                style={styles.card}
+                style={{
+                  ...styles.card,
+                  ...(hoveredCard === jobKey && styles.cardHover)
+                }}
+                onMouseEnter={() => setHoveredCard(jobKey)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                <h4 style={{ color: '#374151', marginBottom: '15px' }}>{job.title}</h4>
+                <h4 style={{ color: '#2d3748', marginBottom: '15px' }}>{job.title}</h4>
                 <div style={{ marginBottom: '20px' }}>
-                  <p style={{ color: '#6b7280', margin: '0 0 8px 0' }}><strong>Organization:</strong> {job.companyName}</p>
-                  <p style={{ color: '#6b7280', margin: '0 0 8px 0' }}><strong>Location:</strong> {job.location}</p>
-                  <p style={{ color: '#6b7280', margin: '0 0 8px 0' }}><strong>Compensation:</strong> {job.salary}</p>
-                  <p style={{ color: '#4b5563', margin: '0 0 8px 0' }}><strong>Requirements:</strong> {job.requirements}</p>
-                  <p style={{ color: '#4b5563', margin: 0 }}><strong>Qualifications:</strong> {job.qualifications}</p>
+                  <p style={{ color: '#718096', margin: '0 0 8px 0' }}><strong>Organization:</strong> {job.companyName}</p>
+                  <p style={{ color: '#718096', margin: '0 0 8px 0' }}><strong>Location:</strong> {job.location}</p>
+                  <p style={{ color: '#718096', margin: '0 0 8px 0' }}><strong>Compensation:</strong> {job.salary}</p>
+                  <p style={{ color: '#4a5568', margin: '0 0 8px 0' }}><strong>Requirements:</strong> {job.requirements}</p>
+                  <p style={{ color: '#4a5568', margin: 0 }}><strong>Qualifications:</strong> {job.qualifications}</p>
                 </div>
                 <button 
                   style={styles.primaryButton}
@@ -1084,10 +1261,10 @@ const StudentPortal = ({ user, onLogout }) => {
 
   const renderProfile = () => (
     <div>
-      <h3 style={{ color: '#374151', marginBottom: '20px', fontSize: '1.5rem', fontWeight: 700 }}>My Profile</h3>
+      <h3 style={{ color: 'white', marginBottom: '20px', fontSize: '1.8rem', fontWeight: 700 }}>My Profile</h3>
       
       <div style={styles.card}>
-        <h4 style={{ color: '#374151', marginBottom: '20px' }}>Personal Information</h4>
+        <h4 style={{ color: '#2d3748', marginBottom: '20px' }}>Personal Information</h4>
         <div style={styles.grid}>
           <div style={styles.formGroup}>
             <label style={styles.label}>Full Name</label>
@@ -1095,7 +1272,12 @@ const StudentPortal = ({ user, onLogout }) => {
               type="text"
               value={profileData.name}
               onChange={(e) => setProfileData({...profileData, name: e.target.value})}
-              style={styles.input}
+              style={{
+                ...styles.input,
+                ...(focusedInput === 'name' && styles.inputFocus)
+              }}
+              onFocus={() => setFocusedInput('name')}
+              onBlur={() => setFocusedInput(null)}
               placeholder="Enter your full name"
             />
           </div>
@@ -1114,7 +1296,12 @@ const StudentPortal = ({ user, onLogout }) => {
               type="tel"
               value={profileData.phone}
               onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
-              style={styles.input}
+              style={{
+                ...styles.input,
+                ...(focusedInput === 'phone' && styles.inputFocus)
+              }}
+              onFocus={() => setFocusedInput('phone')}
+              onBlur={() => setFocusedInput(null)}
               placeholder="Enter your phone number"
             />
           </div>
@@ -1125,7 +1312,12 @@ const StudentPortal = ({ user, onLogout }) => {
           <textarea
             value={profileData.address}
             onChange={(e) => setProfileData({...profileData, address: e.target.value})}
-            style={styles.textarea}
+            style={{
+              ...styles.textarea,
+              ...(focusedInput === 'address' && styles.inputFocus)
+            }}
+            onFocus={() => setFocusedInput('address')}
+            onBlur={() => setFocusedInput(null)}
             placeholder="Enter your complete address"
           />
         </div>
@@ -1140,8 +1332,8 @@ const StudentPortal = ({ user, onLogout }) => {
       </div>
 
       <div style={styles.card}>
-        <h4 style={{ color: '#374151', marginBottom: '20px' }}>Academic Documents</h4>
-        <p style={{ color: '#6b7280', marginBottom: '20px' }}>
+        <h4 style={{ color: '#2d3748', marginBottom: '20px' }}>Academic Documents</h4>
+        <p style={{ color: '#718096', marginBottom: '20px' }}>
           Upload your academic documents to complete your profile. Supported file formats include PDF, DOC, and DOCX.
         </p>
         
@@ -1149,7 +1341,7 @@ const StudentPortal = ({ user, onLogout }) => {
           <div style={styles.formGroup}>
             <label style={styles.label}>Curriculum Vitae / Resume</label>
             {documents.resume && (
-              <p style={{ color: '#16a34a', fontSize: '14px', fontWeight: 500, marginBottom: '8px' }}>
+              <p style={{ color: 'green', fontSize: '14px', fontWeight: 500, marginBottom: '8px' }}>
                 ✓ Document uploaded: {documents.resumeName || 'resume'}
               </p>
             )}
@@ -1164,7 +1356,7 @@ const StudentPortal = ({ user, onLogout }) => {
           <div style={styles.formGroup}>
             <label style={styles.label}>Academic Transcripts</label>
             {documents.transcripts && (
-              <p style={{ color: '#16a34a', fontSize: '14px', fontWeight: 500, marginBottom: '8px' }}>
+              <p style={{ color: 'green', fontSize: '14px', fontWeight: 500, marginBottom: '8px' }}>
                 ✓ Document uploaded: {documents.transcriptsName || 'transcripts'}
               </p>
             )}
@@ -1179,7 +1371,7 @@ const StudentPortal = ({ user, onLogout }) => {
           <div style={styles.formGroup}>
             <label style={styles.label}>Additional Certificates</label>
             {documents.certificates && (
-              <p style={{ color: '#16a34a', fontSize: '14px', fontWeight: 500, marginBottom: '8px' }}>
+              <p style={{ color: 'green', fontSize: '14px', fontWeight: 500, marginBottom: '8px' }}>
                 ✓ Document uploaded: {documents.certificatesName || 'certificates'}
               </p>
             )}
@@ -1229,7 +1421,7 @@ const StudentPortal = ({ user, onLogout }) => {
             }}
             onClick={() => setActiveTab('dashboard')}
           >
-            Dashboard
+            Dashboard Overview
           </button>
           <button 
             style={{
@@ -1279,6 +1471,9 @@ const StudentPortal = ({ user, onLogout }) => {
         {activeTab === 'jobs' && renderJobPortal()}
         {activeTab === 'profile' && renderProfile()}
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
