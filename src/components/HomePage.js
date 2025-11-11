@@ -5,25 +5,21 @@ const HomePage = ({ onNavigate }) => {
     {
       title: 'Student Portal',
       description: 'Access courses, track your progress, and connect with top companies for career opportunities. Build your future with comprehensive learning tools.',
-      color: '#667eea',
       route: 'student'
     },
     {
       title: 'Institute Dashboard',
       description: 'Manage courses, monitor student progress, and build partnerships with leading companies. Streamline your educational operations.',
-      color: '#f5576c',
       route: 'institute'
     },
     {
       title: 'Company Portal',
       description: 'Discover talented students, post internships, and collaborate with educational institutes. Build your future workforce today.',
-      color: '#4facfe',
       route: 'company'
     },
     {
       title: 'Admin Console',
       description: 'Comprehensive administration tools to manage platform operations, users, and system performance. Ensure smooth platform functioning.',
-      color: '#43e97b',
       route: 'admin'
     }
   ];
@@ -45,31 +41,28 @@ const HomePage = ({ onNavigate }) => {
   const styles = {
     homePage: {
       minHeight: '100vh',
-      fontFamily: "'Poppins', 'Segoe UI', sans-serif",
-      background: 'blue',
+      fontFamily: "'Inter', 'Segoe UI', sans-serif",
+      background: '#f3f4f6',
       overflowX: 'hidden'
     },
     
     // Navigation
     navigation: {
-      background: 'rgba(255, 255, 255, 0.95)',
-      backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+      background: '#ffffff',
+      borderBottom: '1px solid #e5e7eb',
       padding: '1rem 2rem',
       position: 'sticky',
       top: 0,
       zIndex: 1000,
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
     },
     logo: {
-      fontSize: '1.8rem',
+      fontSize: '1.5rem',
       fontWeight: 700,
-      background: 'black',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      color: '#2563eb'
     },
     navButtons: {
       display: 'flex',
@@ -77,11 +70,11 @@ const HomePage = ({ onNavigate }) => {
     },
     navButton: {
       padding: '0.8rem 1.5rem',
-      borderRadius: '25px',
+      borderRadius: '6px',
       border: 'none',
       fontWeight: 600,
       cursor: 'pointer',
-      transition: 'all 0.3s ease',
+      transition: 'all 0.2s ease',
       fontSize: '0.9rem'
     },
     
@@ -92,110 +85,106 @@ const HomePage = ({ onNavigate }) => {
       alignItems: 'center',
       justifyContent: 'center',
       padding: '4rem 2rem',
-      position: 'relative'
+      background: '#2563eb'
     },
     heroContent: {
       textAlign: 'center',
-      maxWidth: '800px'
+      maxWidth: '800px',
+      color: 'white'
     },
     heroTitle: {
-      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-      fontWeight: 800,
+      fontSize: 'clamp(2rem, 5vw, 3rem)',
+      fontWeight: 700,
       marginBottom: '1.5rem',
-      background: 'linear-gradient(135deg, #2c3e50 0%, #3498db 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
       lineHeight: 1.2
     },
     heroSubtitle: {
-      fontSize: '1.3rem',
-      color: '#5a6c7d',
+      fontSize: '1.1rem',
+      opacity: 0.9,
       marginBottom: '3rem',
       lineHeight: 1.6,
-      fontWeight: 300
+      fontWeight: 400
     },
     
     // Portals Section
     portalsSection: {
-      padding: '5rem 2rem',
+      padding: '4rem 2rem',
       background: 'white'
     },
     sectionTitle: {
       textAlign: 'center',
-      fontSize: '2.5rem',
+      fontSize: '2rem',
       fontWeight: 700,
       marginBottom: '1rem',
-      color: '#2c3e50'
+      color: '#374151'
     },
     sectionSubtitle: {
       textAlign: 'center',
-      fontSize: '1.1rem',
-      color: '#7f8c8d',
-      marginBottom: '4rem',
+      fontSize: '1rem',
+      color: '#6b7280',
+      marginBottom: '3rem',
       maxWidth: '600px',
-      margin: '0 auto 4rem auto'
+      margin: '0 auto 3rem auto'
     },
     portalsGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
       gap: '2rem',
       maxWidth: '1200px',
       margin: '0 auto'
     },
     portalCard: {
-      background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
-      borderRadius: '20px',
-      padding: '2.5rem 2rem',
-      boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
-      border: '1px solid rgba(255,255,255,0.5)',
-      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-      cursor: 'pointer',
-      position: 'relative',
-      overflow: 'hidden'
+      background: '#ffffff',
+      borderRadius: '8px',
+      padding: '2rem',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      border: '1px solid #e5e7eb',
+      transition: 'all 0.2s ease',
+      cursor: 'pointer'
     },
     portalCardHover: {
-      transform: 'translateY(-10px)',
-      boxShadow: '0 20px 50px rgba(0,0,0,0.15)'
+      transform: 'translateY(-2px)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
     },
     portalIcon: {
-      width: '60px',
-      height: '60px',
-      borderRadius: '15px',
+      width: '50px',
+      height: '50px',
+      borderRadius: '8px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: '1.5rem',
-      fontSize: '1.5rem',
+      fontSize: '1.2rem',
       fontWeight: 'bold',
-      color: 'white'
+      color: 'white',
+      background: '#2563eb'
     },
     portalTitle: {
-      fontSize: '1.5rem',
-      fontWeight: 700,
+      fontSize: '1.25rem',
+      fontWeight: 600,
       marginBottom: '1rem',
-      color: '#2c3e50'
+      color: '#374151'
     },
     portalDescription: {
-      color: '#7f8c8d',
+      color: '#6b7280',
       lineHeight: 1.6,
       marginBottom: '2rem'
     },
     portalButton: {
       padding: '0.8rem 1.5rem',
-      borderRadius: '25px',
+      borderRadius: '6px',
       border: 'none',
-      background: 'rgba(0,0,0,0.05)',
-      color: '#2c3e50',
+      background: '#f3f4f6',
+      color: '#374151',
       fontWeight: 600,
       cursor: 'pointer',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.2s ease'
     },
     
     // Stats Section
     statsSection: {
-      padding: '5rem 2rem',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '4rem 2rem',
+      background: '#2563eb',
       color: 'white'
     },
     statsGrid: {
@@ -210,104 +199,90 @@ const HomePage = ({ onNavigate }) => {
       padding: '2rem 1rem'
     },
     statNumber: {
-      fontSize: '3rem',
-      fontWeight: 800,
-      marginBottom: '0.5rem',
-      background: 'black',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      fontSize: '2.5rem',
+      fontWeight: 700,
+      marginBottom: '0.5rem'
     },
     statLabel: {
-      fontSize: '1.1rem',
+      fontSize: '1rem',
       opacity: 0.9,
       fontWeight: 500
     },
     
     // CTA Section
     ctaSection: {
-      padding: '5rem 2rem',
+      padding: '4rem 2rem',
       background: 'white',
       textAlign: 'center'
     },
     ctaTitle: {
-      fontSize: '2.2rem',
+      fontSize: '1.75rem',
       fontWeight: 700,
-      marginBottom: '1.5rem',
-      color: '#2c3e50'
+      marginBottom: '1rem',
+      color: '#374151'
     },
     ctaSubtitle: {
-      fontSize: '1.2rem',
-      color: '#7f8c8d',
-      marginBottom: '3rem',
+      fontSize: '1rem',
+      color: '#6b7280',
+      marginBottom: '2rem',
       maxWidth: '600px',
       margin: '0 auto'
     },
     ctaButton: {
-      padding: '1.2rem 3rem',
-      fontSize: '1.1rem',
+      padding: '1rem 2rem',
+      fontSize: '1rem',
       fontWeight: 600,
       border: 'none',
-      borderRadius: '30px',
+      borderRadius: '6px',
       cursor: 'pointer',
-      background: 'e',
+      background: '#2563eb',
       color: 'white',
-      transition: 'all 0.3s ease',
-      boxShadow: '0 10px 30px rgba(102, 126, 234, 0.3)'
-    },
-    ctaButtonHover: {
-      transform: 'scale(1.05)',
-      boxShadow: '0 15px 40px rgba(102, 126, 234, 0.4)'
+      transition: 'background-color 0.2s ease'
     },
     
     // Footer
     footer: {
-      background: '#2c3e50',
+      background: '#374151',
       color: 'white',
-      padding: '4rem 2rem 2rem'
+      padding: '3rem 2rem 2rem'
     },
     footerContent: {
       maxWidth: '1200px',
       margin: '0 auto',
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-      gap: '3rem',
-      marginBottom: '3rem'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gap: '2rem',
+      marginBottom: '2rem'
     },
     footerColumn: {
       display: 'flex',
       flexDirection: 'column',
-      gap: '1rem'
+      gap: '0.8rem'
     },
     footerTitle: {
-      fontSize: '1.2rem',
-      fontWeight: 700,
-      marginBottom: '1rem',
-      color: '#ecf0f1'
+      fontSize: '1.1rem',
+      fontWeight: 600,
+      marginBottom: '0.5rem',
+      color: '#f9fafb'
     },
     footerLink: {
-      color: '#bdc3c7',
+      color: '#d1d5db',
       textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      padding: '0.3rem 0'
-    },
-    footerLinkHover: {
-      color: 'white',
-      transform: 'translateX(5px)'
+      transition: 'color 0.2s ease',
+      padding: '0.2rem 0'
     },
     footerBottom: {
       maxWidth: '1200px',
       margin: '0 auto',
       paddingTop: '2rem',
-      borderTop: '1px solid rgba(255,255,255,0.1)',
+      borderTop: '1px solid #4b5563',
       textAlign: 'center',
-      color: '#95a5a6'
+      color: '#9ca3af'
     }
   };
 
   // Hover states
   const [hoveredPortal, setHoveredPortal] = React.useState(null);
-  const [ctaHover, setCtaHover] = React.useState(false);
   const [hoveredFooterLink, setHoveredFooterLink] = React.useState(null);
 
   return (
@@ -320,7 +295,8 @@ const HomePage = ({ onNavigate }) => {
             style={{
               ...styles.navButton,
               background: 'transparent',
-              color: '#2c3e50'
+              color: '#374151',
+              border: '1px solid #d1d5db'
             }}
             onClick={() => onNavigate('login')}
           >
@@ -329,8 +305,9 @@ const HomePage = ({ onNavigate }) => {
           <button
             style={{
               ...styles.navButton,
-              background: 'black',
-              color: 'white'
+              background: '#2563eb',
+              color: 'white',
+              border: '1px solid #2563eb'
             }}
             onClick={() => onNavigate('register')}
           >
@@ -351,12 +328,7 @@ const HomePage = ({ onNavigate }) => {
             for a brighter future.
           </p>
           <button
-            style={{
-              ...styles.ctaButton,
-              ...(ctaHover && styles.ctaButtonHover)
-            }}
-            onMouseEnter={() => setCtaHover(true)}
-            onMouseLeave={() => setCtaHover(false)}
+            style={styles.ctaButton}
             onClick={() => onNavigate('register')}
           >
             Start Your Journey
@@ -382,12 +354,7 @@ const HomePage = ({ onNavigate }) => {
               onMouseLeave={() => setHoveredPortal(null)}
               onClick={() => onNavigate(portal.route)}
             >
-              <div 
-                style={{
-                  ...styles.portalIcon,
-                  background: `linear-gradient(135deg, ${portal.color} 0%, ${portal.color}99 100%)`
-                }}
-              >
+              <div style={styles.portalIcon}>
                 {portal.title.charAt(0)}
               </div>
               <h3 style={styles.portalTitle}>{portal.title}</h3>
@@ -420,12 +387,7 @@ const HomePage = ({ onNavigate }) => {
           who are already transforming education with LearnBridge
         </p>
         <button
-          style={{
-            ...styles.ctaButton,
-            ...(ctaHover && styles.ctaButtonHover)
-          }}
-          onMouseEnter={() => setCtaHover(true)}
-          onMouseLeave={() => setCtaHover(false)}
+          style={styles.ctaButton}
           onClick={() => onNavigate('register')}
         >
           Create Your Account
@@ -444,7 +406,7 @@ const HomePage = ({ onNavigate }) => {
                   href="#"
                   style={{
                     ...styles.footerLink,
-                    ...(hoveredFooterLink === `${category}-${index}` && styles.footerLinkHover)
+                    ...(hoveredFooterLink === `${category}-${index}` && { color: 'white' })
                   }}
                   onMouseEnter={() => setHoveredFooterLink(`${category}-${index}`)}
                   onMouseLeave={() => setHoveredFooterLink(null)}
@@ -459,36 +421,6 @@ const HomePage = ({ onNavigate }) => {
           <p>&copy; 2024 LearnBridge. Empowering education through technology and innovation.</p>
         </div>
       </footer>
-
-      {/* Global Styles */}
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-          
-          * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-          }
-          
-          body {
-            font-family: 'Poppins', sans-serif;
-          }
-          
-          button {
-            font-family: inherit;
-          }
-          
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          
-          section {
-            animation: fadeIn 0.8s ease-out;
-          }
-        `}
-      </style>
     </div>
   );
 };
