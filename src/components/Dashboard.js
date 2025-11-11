@@ -3,7 +3,7 @@ import React from 'react';
 const Dashboard = ({ userRole, onNavigate, onLogout }) => {
   const dashboardStyle = {
     minHeight: '100vh',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    background: 'blue',
     padding: '20px'
   };
 
