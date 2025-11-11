@@ -1128,7 +1128,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
             {loading ? (
               <>
                 <span style={{ display: 'inline-block', animation: 'spin 1s linear infinite', marginRight: '8px' }}>
-                  ⏳
+                  
                 </span>
                 Creating Account...
               </>
