@@ -1020,7 +1020,7 @@ const Register = ({ onSwitchToLogin, onLogin }) => {
           }}
         >
           {googleLoading ? (
-            <span style={{ animation: 'spin 1s linear infinite' }}>⏳</span>
+            <span style={{ animation: 'spin 1s linear infinite' }}></span>
           ) : (
             <img 
               src="https://developers.google.com/identity/images/g-logo.png" 
