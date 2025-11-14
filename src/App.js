@@ -18,28 +18,23 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [appInitialized, setAppInitialized] = useState(false);
 
-  // Initialize app and setup institutions (run once)
+  // Initialize app (optionally run institution setup based on env flag)
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        console.log('Initializing EduConnect application...');
-        
-        // Check if we need to setup institution accounts
-        const institutionsSetup = localStorage.getItem('institutions_setup_complete');
-        if (!institutionsSetup) {
-          console.log('Setting up institution accounts...');
-          await setupInstitutionAccounts();
-          localStorage.setItem('institutions_setup_complete', 'true');
-          console.log('Institution accounts setup completed');
+        const enableAutoSetup = process.env.REACT_APP_ENABLE_SETUP === 'true';
+        if (enableAutoSetup) {
+          const institutionsSetup = localStorage.getItem('institutions_setup_complete');
+          if (!institutionsSetup) {
+            await setupInstitutionAccounts();
+            localStorage.setItem('institutions_setup_complete', 'true');
+          }
         }
-        
         setAppInitialized(true);
       } catch (error) {
-        console.error('Error during app initialization:', error);
-        setAppInitialized(true); // Continue even if setup fails
+        setAppInitialized(true);
       }
     };
-
     initializeApp();
   }, []);
 
